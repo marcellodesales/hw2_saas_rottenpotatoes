@@ -7,29 +7,41 @@ class MoviesController < ApplicationController
   end
 
   def index
+    # Load all the ratings from the model
     @all_ratings = Movie.all_ratings
-    ratings = nil
+
+    # figure out which ratings were selected by the user, if any.
     if params.has_key?(:ratings)
-      @sel_ratings = params[:ratings].keys
-      ratings = @sel_ratings.map{|s| "'#{s}'"}.join(',')
+      session[:sel_ratings] = params[:ratings].keys
+
+    elsif params.has_key?(:commit)
+      session[:sel_ratings] = []
     end
+
+    in_ratings = nil
+    @sel_ratings = session[:sel_ratings]
+    if @sel_ratings.size > 0
+      in_ratings = @sel_ratings.map{|rat| "'#{rat}'"}.join(',')
+    end
+
+    @by_column = nil
+    @by_column = session[:sort_column] if session.has_key?(:sort_column)
     if params.has_key?(:s)
-      if params[:s] == "title_header"
-      	@movies = Movie.where("rating IN (#{ratings})").order("title").all if ratings
-      	@movies = Movie.order("title").all if !ratings
+      @by_column = params[:s]
+      session[:sort_column] = params[:s]
+    end
 
-      elsif params[:s] == "release_date_header"
-      	@movies = Movie.where("rating IN (#{ratings})").order("release_date").all if ratings
-      	@movies = Movie.order("release_date").all if !ratings
+    if @by_column == "title_header"
+      @movies = Movie.where("rating IN (#{in_ratings})").order("title").all if in_ratings
+      @movies = Movie.order("title").all if !in_ratings
 
-      else
-      	@movies = Movie.where("rating IN (#{ratings})").all if ratings
-      	@movies = Movie.all if !ratings
-      end
+    elsif @by_column == "release_date_header"
+      @movies = Movie.where("rating IN (#{in_ratings})").order("release_date").all if in_ratings
+      @movies = Movie.order("release_date").all if !in_ratings
 
-    else  
-      @movies = Movie.where("rating IN (#{ratings})").all if ratings
-      @movies = Movie.all if !ratings
+    else
+      @movies = Movie.where("rating IN (#{in_ratings})").all if in_ratings
+      @movies = Movie.all if !in_ratings
     end
   end
 
