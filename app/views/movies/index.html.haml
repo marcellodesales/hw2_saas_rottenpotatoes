@@ -4,9 +4,11 @@
 %table#movies
   %thead
     %tr
-      %th Movie Title
+      %th{:class => (params.has_key?(:s) && params[:s] == "title_header") ? "hilite" : nil} 
+        <a href="#{movies_path}?s=title_header" id="title_header">Movies</a>
       %th Rating
-      %th Release Date
+      %th{:class => (params.has_key?(:s) && params[:s] == "release_date_header") ? "hilite" : nil}  
+        <a href="#{movies_path}?s=release_date_header" id="release_date_header">Release Date</a>
       %th More Info
   %tbody
     - @movies.each do |movie|
