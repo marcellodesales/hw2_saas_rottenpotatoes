@@ -10,7 +10,8 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     ratings = nil
     if params.has_key?(:ratings)
-      ratings = params[:ratings].keys.map{|s| "'#{s}'"}.join(',')
+      @sel_ratings = params[:ratings].keys
+      ratings = @sel_ratings.map{|s| "'#{s}'"}.join(',')
     end
     if params.has_key?(:s)
       if params[:s] == "title_header"
