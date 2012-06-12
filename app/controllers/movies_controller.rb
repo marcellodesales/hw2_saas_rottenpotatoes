@@ -7,19 +7,28 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.all_ratings
+    ratings = nil
+    if params.has_key?(:ratings)
+      ratings = params[:ratings].keys.map{|s| "'#{s}'"}.join(',')
+    end
     if params.has_key?(:s)
       if params[:s] == "title_header"
-      	@movies = Movie.order("title").all
+      	@movies = Movie.where("rating IN (#{ratings})").order("title").all if ratings
+      	@movies = Movie.order("title").all if !ratings
 
       elsif params[:s] == "release_date_header"
-      	@movies = Movie.order("release_date").all
+      	@movies = Movie.where("rating IN (#{ratings})").order("release_date").all if ratings
+      	@movies = Movie.order("release_date").all if !ratings
 
       else
-      	@movies = Movie.all
+      	@movies = Movie.where("rating IN (#{ratings})").all if ratings
+      	@movies = Movie.all if !ratings
       end
 
     else  
-      @movies = Movie.all
+      @movies = Movie.where("rating IN (#{ratings})").all if ratings
+      @movies = Movie.all if !ratings
     end
   end
 
