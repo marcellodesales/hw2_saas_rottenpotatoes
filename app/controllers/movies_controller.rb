@@ -20,7 +20,7 @@ class MoviesController < ApplicationController
 
     in_ratings = nil
     @sel_ratings = session[:sel_ratings]
-    if @sel_ratings.size > 0
+    if @sel_ratings && @sel_ratings.size > 0
       in_ratings = @sel_ratings.map{|rat| "'#{rat}'"}.join(',')
     end
 
