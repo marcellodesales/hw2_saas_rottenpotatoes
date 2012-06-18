@@ -26,12 +26,12 @@ Scenario: sort movies alphabetically
   And I check the following ratings: G,PG,PG-13,R
   When I press "Refresh"
   And I follow "title_header"
-  Then I should see "Amelie" before "Chocolat"
+  Then I should see "2001: A Space Odyssey" before "Aladdin"
 
 Scenario: sort movies in increasing order of release date
   Given I am on the RottenPotatoes home page
   And I check the following ratings: G,PG,PG-13,R
   When I press "Refresh"
   And I follow "release_date_header"
-  Then I should see "Chocolat" before "Amelie"
+  Then I should see "Chicken Run" before "Amelie"
 
