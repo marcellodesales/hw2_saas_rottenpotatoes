@@ -5,11 +5,21 @@ gem 'rails', '3.2.5'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
+
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
   gem 'sqlite3'
-  gem 'debugger' 
+  gem 'debugger'
+  gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'launchy'
 end
+
+group :test do
+  gem 'cucumber-rails'
+end
+
 group :production do
   gem 'pg'
 end
