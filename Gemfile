@@ -5,7 +5,6 @@ gem 'rails', '3.2.5'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
   gem 'sqlite3'
@@ -20,7 +19,7 @@ group :test do
   gem 'cucumber-rails'
   gem 'cucumber-rails-training-wheels'
   gem 'autotest'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
 group :production do
