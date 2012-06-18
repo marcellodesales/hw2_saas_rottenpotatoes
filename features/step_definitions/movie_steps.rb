@@ -47,3 +47,15 @@ Then /^I should see the following ratings: (.*)/ do |rating_list|
     assert ratingsInPage.include?(rat.strip)
   end
 end
+
+Then /^I should not see the following ratings: (.*)/ do |rating_list|
+  ratingsInPage = page.all("table#movies tbody tr td[2]").map! {|t| t.text}
+  rating_list.split(",").each do |rat|
+    assert !ratingsInPage.include?(rat.strip)
+  end
+end
+
+Then /^I should see all of the movies$/ do
+  moviesInPage = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
+  assert Movie.all.count == moviesInPage.size
+end
