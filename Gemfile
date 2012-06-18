@@ -20,6 +20,7 @@ group :test do
   gem 'cucumber-rails'
   gem 'cucumber-rails-training-wheels'
   gem 'autotest'
+  gem 'factory_girl'
 end
 
 group :production do
