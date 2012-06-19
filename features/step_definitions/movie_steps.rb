@@ -61,5 +61,5 @@ Then /^I should see all of the movies$/ do
 end
 
 Then /^the director of "(.*?)" should be "(.*?)"$/ do |title, director|
-  assert director == Movie.select(:director).where(:title => title).limit(1)[0].director
+  assert director == Movie.where(:title => title).pluck(:director)[0]
 end
