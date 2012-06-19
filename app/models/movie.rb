@@ -1,7 +1,18 @@
+require "addressable/uri"
+
 class Movie < ActiveRecord::Base
 
-  class InvalidKeyError < Error
+  #def to_param
+  #  "#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}-#{director.gsub(/[^a-z0-9]+/i, '-')}"
+  #end
 
+  def to_search_param
+    uri = Addressable::URI.new
+    uri.query_values = {:director => self.director, :title => self.title}
+    uri.query
+  end
+
+  class InvalidKeyError < Error
   end 
 end
 

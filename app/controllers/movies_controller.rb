@@ -31,6 +31,10 @@ class MoviesController < ApplicationController
       session[:sort_column] = params[:s]
     end
 
+    @by_director = nil
+    @by_director = params[:director] if params.has_key?(:director)
+    @with_title = params[:title] if params.has_key?(:title)
+
     # redirect the user to the URL built from the session
     redirect_map = {}
     if !params.has_key?(:s) && session.has_key?(:sort_column)
@@ -41,12 +45,15 @@ class MoviesController < ApplicationController
         redirect_map["ratings_#{rat}"] = "1"
       }
     end
-    if redirect_map.size > 0 && !params.has_key?(:redirected)
+    if !@by_director && redirect_map.size > 0 && !params.has_key?(:redirected)
       redirect_map[:redirected] = 1
       redirect_to movies_path(redirect_map)
     end
 
-    if @by_column == "title_header"
+    if @by_director
+      @movies = Movie.where(:director => @by_director)
+
+    elsif @by_column == "title_header"
       @movies = Movie.where("rating IN (#{in_ratings})").order("title").all if in_ratings
       @movies = Movie.order("title").all if !in_ratings
 

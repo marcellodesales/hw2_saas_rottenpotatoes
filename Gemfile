@@ -11,15 +11,15 @@ gem 'ruby-tmdb'
 group :development, :test do
   gem 'sqlite3'
   gem 'debugger'
-  gem 'database_cleaner'
-  gem 'capybara'
-  gem 'launchy'
+  gem 'database_cleaner' # to clear Cucumber’s test database between runs
+  gem 'capybara'  # lets Cucumber pretend to be a web browser
+  gem 'launchy' # a useful debugging aid for user stories 
   gem 'rspec-rails'
 end
 
 group :test do
   gem 'cucumber-rails'
-  gem 'cucumber-rails-training-wheels'
+  gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions
   gem 'autotest'
   gem 'factory_girl_rails'
 end

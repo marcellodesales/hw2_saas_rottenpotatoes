@@ -230,7 +230,11 @@ end
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
-    current_path.should == path_to(page_name)
+    if (!URI.parse(current_url).query)
+      current_path.should == path_to(page_name)
+    else
+      current_path + "?" + URI.parse(current_url).query == path_to(page_name)
+    end
   else
     assert_equal path_to(page_name), current_path
   end
