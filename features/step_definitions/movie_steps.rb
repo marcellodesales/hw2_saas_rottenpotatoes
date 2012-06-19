@@ -59,3 +59,7 @@ Then /^I should see all of the movies$/ do
   moviesInPage = page.all("table#movies tbody tr td[1]").map! {|t| t.text}
   assert Movie.all.count == moviesInPage.size
 end
+
+Then /^the director of "(.*?)" should be "(.*?)"$/ do |title, director|
+  assert director == Movie.select(:director).where(:title => title).limit(1)[0].director
+end
