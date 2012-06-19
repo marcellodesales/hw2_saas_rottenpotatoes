@@ -22,6 +22,7 @@ group :test do
   gem 'cucumber-rails-training-wheels' # some pre-fabbed step definitions
   gem 'autotest'
   gem 'factory_girl_rails'
+  gem 'simplecov', :require => false
 end
 
 group :production do
