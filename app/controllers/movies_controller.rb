@@ -103,7 +103,22 @@ class MoviesController < ApplicationController
   # add to movies_controller.rb, anywhere inside
   #  'class MoviesController < ApplicationController':
   def search_tmdb
-    @movies = Movie.find_in_tmdb(params[:search_terms])  
-  end
+    title = params[:search_terms] if params.has_key?(:search_terms)
 
+    begin
+      movie = Movie.find_in_tmdb(params[:search_terms])
+      if Movie.where(:title => title).pluck(:title).size == 0
+        movie.save
+        flash[:notice] = "'#{movie.title}' was found on TMDb and added to local Rotten Potatoes."
+          
+      else
+        flash[:notice] = "'#{movie.title}' was found on TMDb, but already exists locally."
+      end
+
+    rescue Movie::MovieNotFoundError => mnfe
+      flash[:notice] = "'#{title}' was not found in TMDb."
+    end
+
+    redirect_to movies_path
+  end
 end

@@ -23,3 +23,16 @@ Scenario: Try to add existing movie (happy path)
   Then I should be on the RottenPotatoes home page
   And I should see "Inception"
   And I should see "PG-13"
+
+Scenario: Try to add an already existing movie
+
+  When I fill in "Search Terms" with "Up"
+  And I press "Search TMDb"
+  Then I should be on the RottenPotatoes home page
+  And I should see "Up"
+  And I should see "PG"
+  When I fill in "Search Terms" with "Up"
+  And I press "Search TMDb"
+  Then I should be on the RottenPotatoes home page
+  And I should see "'Up' was found on TMDb, but already exists locally."
+
