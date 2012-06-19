@@ -51,7 +51,12 @@ class MoviesController < ApplicationController
     end
 
     if @by_director
-      @movies = Movie.where(:director => @by_director)
+      if @by_director != ""
+        @movies = Movie.where(:director => @by_director)
+      else
+        @movies = Movie.all
+        flash[:notice] = "'#{@with_title}' has no director info"
+      end
 
     elsif @by_column == "title_header"
       @movies = Movie.where("rating IN (#{in_ratings})").order("title").all if in_ratings
